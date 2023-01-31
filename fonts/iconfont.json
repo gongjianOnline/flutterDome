@@ -1,0 +1,30 @@
+{
+  "id": "3874297",
+  "name": "flutter",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "902053",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "1246668",
+      "name": "支付宝支付",
+      "font_class": "zhifubaozhifu",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "1403435",
+      "name": "小米",
+      "font_class": "xiaomi",
+      "unicode": "e832",
+      "unicode_decimal": 59442
+    }
+  ]
+}
