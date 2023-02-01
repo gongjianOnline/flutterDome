@@ -42,7 +42,7 @@ class MyLogo extends StatelessWidget {
   const MyLogo({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Container(
       width: 150,
       height: 150,
