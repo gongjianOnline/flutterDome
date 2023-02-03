@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import "./components/NavComponent.dart";
 
-void main(){
-  runApp(MyPage());
-}
-
-class MyPage extends StatefulWidget {
+class MyPage  extends StatefulWidget {
   const MyPage({super.key});
 
   @override
@@ -15,9 +10,6 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home:NavComponent()
-    );
+    return const  Text("this is MyPage");
   }
 }
-
