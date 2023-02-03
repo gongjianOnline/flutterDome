@@ -11,46 +11,60 @@ class MyPage extends StatefulWidget {
   State<MyPage> createState() => _MyPageState();
 }
 
-class _MyPageState extends State<MyPage> {
-  int currentIndex = 0;
+class _MyPageState extends State<MyPage> 
+with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: 10, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home:Scaffold(
         appBar: AppBar(
-          title:const Text("自定义底部导航栏"),
+          title:const Text("自定义顶部菜单"),
+          bottom: TabBar(
+            isScrollable: true,
+            controller: _tabController,
+            tabs:const [
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+              Tab(child: Text("热门")),
+            ],
+          ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type:BottomNavigationBarType.fixed,
-          currentIndex: currentIndex,
-          onTap: (index){
-            setState((){
-              currentIndex = index;
-            });
-          },
-          items:const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "首页"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.access_alarms_outlined),
-              label: "闹钟"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.hotel_class_rounded),
-              label: "分类"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle_sharp),
-              label: "我的"
-            ),
-
+        body: TabBarView(
+          controller: _tabController,
+          children:const  [
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
+            Text("data"),
           ],
         ),
+
+
       ),
     );
   }
 }
-
 
