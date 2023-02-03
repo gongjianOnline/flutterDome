@@ -12,27 +12,41 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("自定义AppBar"),
-          backgroundColor: Colors.blue,
-          leading: IconButton(
-            icon:const Icon(Icons.menu), 
-            onPressed: () {  },
-          ),
-          actions:[
-            IconButton(
-              onPressed: (){}, 
-              icon:const Icon(Icons.home)
+          title:const Text("自定义底部导航栏"),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type:BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (index){
+            setState((){
+              currentIndex = index;
+            });
+          },
+          items:const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "首页"
             ),
-            IconButton(
-              onPressed: (){}, 
-              icon:const Icon(Icons.account_circle)
+            BottomNavigationBarItem(
+              icon: Icon(Icons.access_alarms_outlined),
+              label: "闹钟"
             ),
-          ]
+            BottomNavigationBarItem(
+              icon: Icon(Icons.hotel_class_rounded),
+              label: "分类"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.supervised_user_circle_sharp),
+              label: "我的"
+            ),
+
+          ],
         ),
       ),
     );
