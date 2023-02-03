@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import "./components/NavComponent.dart";
-
+import "./pages/home.dart";
 void main(){
-  runApp(MyPage());
+  runApp(MyApp());
 }
 
-class MyPage extends StatefulWidget {
-  const MyPage({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyPage> createState() => _MyPageState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyPageState extends State<MyPage> {
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home:NavComponent()
+    return MaterialApp(
+      home:HomePage()
     );
   }
 }
-
