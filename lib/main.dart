@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import "./components/dialog.dart";
 
 void main(){
   runApp(const MaterialApp(
@@ -116,8 +117,22 @@ class _MyAppState extends State<MyApp> {
                   );
                 },
                 child: const Text("toast")
+              ),
+
+              ElevatedButton(
+                onPressed: (){
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context, 
+                    builder: (context){
+                      return const MyDialog();
+                    }
+                  );
+                }, 
+                child:const Text("自定义Dialog")
               )
 
+            
             ],
           ),
         )
