@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import "../page/home.dart";
 import "../page/my.dart";
 import "../page/user.dart";
@@ -16,13 +17,13 @@ var onGenerateRoute = (RouteSettings settings) {
   // 主要是判断路由传参是否携带arguments参数
   if (pageContentBuilder != null) {
     if (settings.arguments != null) {
-      final Route route = MaterialPageRoute(
+      final Route route = CupertinoPageRoute(
           builder: (context) =>
               pageContentBuilder(context, arguments: settings.arguments));
       return route;
     } else {
       final Route route =
-          MaterialPageRoute(builder: (context) => pageContentBuilder(context));
+          CupertinoPageRoute(builder: (context) => pageContentBuilder(context));
 
       return route;
     }
