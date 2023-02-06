@@ -12,28 +12,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("轮播组件 pageView"),
+        title: const Text("flutter中的key"),
       ),
       body: Center(
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, "/pageView1");
+              onPressed:(){
+                Navigator.pushNamed(context, "/page1");
               }, 
-              child:const Text("轮播组件")
-            ),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, "/pageView2");
-              }, 
-              child:const Text("动态轮播组件")
-            ),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, "/pageView3");
-              }, 
-              child:const Text("无线下拉组件")
+              child: const Text("父组件获取子组件的属性和方法")
             )
           ],
         ),
@@ -41,3 +29,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+

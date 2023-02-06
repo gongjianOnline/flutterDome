@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import "../page/home.dart";
-import "../components/pageView1.dart";
-import "../components/pageView2.dart";
-import "../components/pageView3.dart";
+import "../components/page1.dart";
+
 
 Map routes = {
   "/":(context)=>const MyApp(),
-  "/pageView1":(context)=>const MyPageView1(),
-  "/pageView2":(context)=>const MyPageView2(),
-  "/pageView3":(context)=>const MyPageView3(),
+  "/page1":(context)=>const MyPares()
 };
 
 var onGenerateRoute = (RouteSettings settings) {
