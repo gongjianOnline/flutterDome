@@ -46,10 +46,20 @@ class _MyAppState extends State<MyApp> {
     ChildEl = list.map((item){
       return GestureDetector(
         onTap:(){
+          int defaultImageIndex = 0;
+          for(int i =0;i<list.length;i++){
+            if(list[i]["image"] == item["image"]){
+              defaultImageIndex = i;
+            }
+          }
           Navigator.pushNamed(
             context, 
             "/page2",
-            arguments:{"image":item['image']}
+            arguments:{
+              "image":item['image'],
+              "imageData":list,
+              "defaultImageIndex":defaultImageIndex
+            }
           );
         },
         child:Container(
