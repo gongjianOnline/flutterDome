@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
+
 
 class Page2 extends StatefulWidget {
   final Map arguments;
@@ -25,13 +27,9 @@ class _Page2State extends State<Page2> {
       },
       child: Hero(
         tag: widget.arguments["image"],
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          body:AspectRatio(
-              aspectRatio:16/9,
-              child: Image.network("${widget.arguments["image"]}"),
-            ),
-        )
+        child: PhotoView(
+          imageProvider: NetworkImage("${widget.arguments["image"]}"),
+        ),
       )
     );
   }

@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   fluttertoast: ^8.1.2
+  photo_view: ^0.14.0
   flutter:
     sdk: flutter
 
