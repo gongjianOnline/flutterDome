@@ -7,31 +7,47 @@ class Page1 extends StatefulWidget {
   State<Page1> createState() => _Page1State();
 }
 
-class _Page1State extends State<Page1> {
-  bool flag = true;
+class _Page1State extends State<Page1> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(
+      duration:Duration(seconds: 1),
+      vsync:this
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("显式动画")
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          setState(() {
-            flag = !flag;
-          });
+          _controller.repeat(reverse: true);
         },
-        child:const Icon(Icons.add)
-      ),
-      appBar: AppBar(
-        title: const Text("隐式动画"),
+        child: const Icon(Icons.add),
       ),
       body: Center(
-        child:AnimatedContainer(
-          duration:const Duration(seconds: 1,milliseconds: 100),
-          width: flag?200:300,
-          height: flag?200:300,
-          decoration:const BoxDecoration(
-            color:Colors.red
+        // child:RotationTransition(
+        //   turns: _controller,
+        //   child:const FlutterLogo(size: 100),
+        // ),
+        // child:FadeTransition(
+        //   opacity: _controller,
+        //   child:const FlutterLogo(size: 100),
+        // ),
+        child:ScaleTransition(
+          scale: _controller,
+          child: Container(
+            width: 100,
+            height: 100,
+            color: Colors.red,
           ),
-        ),
+        )
       )
     );
   }

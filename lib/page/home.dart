@@ -21,19 +21,13 @@ class _MyAppState extends State<MyApp> {
               onPressed:(){
                 Navigator.pushNamed(context, "/page1");
               }, 
-              child: const Text("隐式动画")
+              child: const Text("显示动画")
             ),
             ElevatedButton(
               onPressed:(){
                 Navigator.pushNamed(context, "/page2");
               }, 
-              child: const Text("内边距动画")
-            ),
-            ElevatedButton(
-              onPressed:(){
-                Navigator.pushNamed(context, "/page3");
-              }, 
-              child: const Text("透明度动画")
+              child: const Text("图标动画")
             )
           ],
         ),

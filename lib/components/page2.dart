@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Page2 extends StatefulWidget {
   const Page2({super.key});
 
@@ -7,33 +8,41 @@ class Page2 extends StatefulWidget {
   State<Page2> createState() => _Page2State();
 }
 
-class _Page2State extends State<Page2> {
-  bool flag = true;
+class _Page2State extends State<Page2> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller =  AnimationController(
+      vsync:this,
+      duration:const  Duration(seconds: 1),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("内边距动画"),
+      appBar:AppBar(
+        title:const Text("自定义图标交错动画"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          setState(() {
-            flag = !flag;
-          });
+          _controller.forward();
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
-      body:AnimatedPadding(
-        padding:EdgeInsets.fromLTRB(0, flag?0:200, 0, 0),
-        duration:const Duration(seconds: 1),
-        curve: Curves.slowMiddle,
-        child: Container(
-          width: 100,
-          height: 100,
-          decoration:const BoxDecoration(
-            color: Colors.red
-          ),
-        ),
+      body:Center(
+        child:  Stack(
+          children:[
+            ScaleTransition(
+                scale: _controller.drive(Tween(begin: 0.0, end: 1.0)
+                    .chain(CurveTween(curve: const Interval(0.5, 1)))),
+                child: const Icon(Icons.close, size: 40)),
+            ScaleTransition(
+                scale: _controller.drive(Tween(begin: 1.0, end: 0.0)
+                    .chain(CurveTween(curve: const Interval(0, 0.5)))),
+                child: const Icon(Icons.search, size: 40)),
+          ],
+        )
       )
     );
   }
