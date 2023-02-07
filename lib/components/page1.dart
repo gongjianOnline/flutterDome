@@ -1,57 +1,40 @@
 import 'package:flutter/material.dart';
 
 
-class MyPares extends StatefulWidget {
-  const MyPares({super.key});
+class Page1 extends StatefulWidget {
+  const Page1({super.key});
 
   @override
-  State<MyPares> createState() => _MyParesState();
+  State<Page1> createState() => _Page1State();
 }
 
-class _MyParesState extends State<MyPares> {
-  final GlobalKey _globalKey = GlobalKey();
+class _Page1State extends State<Page1> {
+  List listData = ['this is  1',"this is 2"];
+  final globalKey = GlobalKey<AnimatedListState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("获取子组件")
+        title:const Text("animatedList列表")
       ),
-      body:Column(
-        children:[
-          const Text("this is pares"),
-          ElevatedButton(
-            onPressed: (){
-              var state = _globalKey.currentState as _MyChildState;
-              print(state.num);
-              state.fun();
-
-              var getWidget = _globalKey.currentWidget as MyChild;
-              print(getWidget);
-            }, 
-            child:const Text("获取属性")
-          ),
-          MyChild(key: _globalKey)
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed:(){
+          globalKey.currentState!.insertItem(listData.length-1);
+          listData.add("this is add item");
+        },
+        child:const Icon(Icons.add),
+      ),
+      body: AnimatedList(
+        key: globalKey,
+        initialItemCount: listData.length,
+        itemBuilder: (BuildContext context,int index,animation){
+          return FadeTransition(
+            opacity: animation,
+            child: Text("${listData[index]}"),
+          );
+        },
       )
     );
   }
 }
 
-
-class MyChild extends StatefulWidget {
-  MyChild({super.key});
-
-  @override
-  State<MyChild> createState() => _MyChildState();
-}
-
-class _MyChildState extends State<MyChild> {
-  int num = 0;
-  fun(){
-    print(num);
-  }
-  @override
-  Widget build(BuildContext context) {
-    return const Text('this is child');
-  }
-}

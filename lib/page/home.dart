@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
               onPressed:(){
                 Navigator.pushNamed(context, "/page1");
               }, 
-              child: const Text("父组件获取子组件的属性和方法")
+              child: const Text("动画组件")
             )
           ],
         ),

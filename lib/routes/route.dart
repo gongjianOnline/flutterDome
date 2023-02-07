@@ -5,7 +5,7 @@ import "../components/page1.dart";
 
 Map routes = {
   "/":(context)=>const MyApp(),
-  "/page1":(context)=>const MyPares()
+  "/page1":(context)=>const Page1()
 };
 
 var onGenerateRoute = (RouteSettings settings) {
