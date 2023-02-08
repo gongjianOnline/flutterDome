@@ -35,8 +35,13 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title:const Text("Stream基操")
       ),
-      body:const Center(
-        child: Text("hello flutter"),
+      body:Center(
+        child:StreamBuilder(
+          stream: loadData(),
+          builder:(context,snapshot){
+            return Text("${snapshot.data}");
+          }
+        )
       )
     );
   }
