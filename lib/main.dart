@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import "dart:async";
 
 void main(){
-  runApp(MaterialApp(
-    home: MyApp(),
+  runApp(const MaterialApp(
+    home:MyApp()
   ));
 }
 
@@ -14,34 +15,38 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  Stream<int> loadData(){
-    return Stream.periodic(
-      const Duration(seconds:5),
-      (_)=>_
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    loadData().listen((event) {print(event);});
-  }
+  final _controller = StreamController<int>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:const Text("Stream基操")
-      ),
+      appBar: AppBar(title:const Text("Stream流操作")),
       body:Center(
-        child:StreamBuilder(
-          stream: loadData(),
-          builder:(context,snapshot){
-            return Text("${snapshot.data}");
-          }
-        )
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: (){
+                print("1111");
+                _controller.add(1);
+              }, 
+              child:const Text("add1")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                print("1111");
+                _controller.add(2);
+              }, 
+              child:const Text("add2")
+            ),
+            StreamBuilder(
+              stream:_controller.stream,
+              builder: (context,snapshot){
+                return Text("${snapshot.data}");
+              }
+            )
+
+          ],
+        ),
       )
     );
   }
