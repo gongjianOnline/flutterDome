@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _controller = StreamController<int>();
+  final _controller = StreamController.broadcast();
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +26,19 @@ class _MyAppState extends State<MyApp> {
           children: [
             ElevatedButton(
               onPressed: (){
-                print("1111");
                 _controller.add(1);
               }, 
               child:const Text("add1")
             ),
             ElevatedButton(
               onPressed: (){
-                print("1111");
                 _controller.add(2);
+              }, 
+              child:const Text("add2")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                _controller.add(3);
               }, 
               child:const Text("add2")
             ),
@@ -43,6 +47,12 @@ class _MyAppState extends State<MyApp> {
               builder: (context,snapshot){
                 return Text("${snapshot.data}");
               }
+            ),
+            StreamBuilder(
+              stream: _controller.stream.where((event) => event>2),
+              builder: (context,snapshot){
+                return  Text("${snapshot.data}");
+              },
             )
 
           ],
