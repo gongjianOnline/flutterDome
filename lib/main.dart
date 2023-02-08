@@ -1,46 +1,54 @@
 import 'package:flutter/material.dart';
 
-
 void main(){
-  runApp(MaterialApp(
-    home:Mypage()
+  runApp( MaterialApp(
+    home: MyApp(),
   ));
 }
 
-class Mypage extends StatefulWidget {
-  const Mypage({super.key});
+Future<String> promise(){
+  // return Future((){
+  //   return "hello flutter";
+  // });
+  return Future.delayed(const Duration(seconds:5),(){
+    return "hello flutter";
+  });
+}
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<Mypage> createState() => _MypageState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MypageState extends State<Mypage> {
+class _MyAppState extends State<MyApp> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("进度条"),
+        title:const Text("this is Page")
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          CircularProgressIndicator(),
-          SizedBox(height: 20),
-          CircularProgressIndicator(
-            backgroundColor: Colors.red,
-            valueColor:AlwaysStoppedAnimation(Colors.black)
-          ),
-          SizedBox(height: 20),
-          LinearProgressIndicator(),
-          SizedBox(height: 20),
-          LinearProgressIndicator(
-            backgroundColor: Colors.white,
-            valueColor: AlwaysStoppedAnimation(Colors.blue),
-            value:0.52
+      body:Column(
+        
+        children: [
+          Text("计数器 $count"),
+          ElevatedButton(
+            onPressed: (){
+              promise().then((value){print(value);});
+              setState((){
+                count++;
+              });
+            }, 
+            child: const Text("add")
           )
         ],
       ),
     );
   }
 }
+
+
+
+
 
