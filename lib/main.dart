@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dome/page/home.dart';
+
 
 void main(){
-  runApp( MaterialApp(
+  runApp(MaterialApp(
     home: MyApp(),
   ));
 }
 
-Future<String> promise(){
-  // return Future((){
-  //   return "hello flutter";
-  // });
-  return Future.delayed(const Duration(seconds:5),(){
-    return "hello flutter";
-  });
-}
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -22,32 +16,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int count = 0;
+  Future<String> _getData() async{
+    await Future.delayed(const Duration(seconds:5));
+    return "11111";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("this is Page")
+        title: const Text("FutureBuilder仿ajax获取数据"),
       ),
-      body:Column(
-        children: [
-          Text("计数器 $count"),
-          ElevatedButton(
-            onPressed: (){
-              promise().then((value){print(value);});
-              setState((){
-                count++;
-              });
-            }, 
-            child: const Text("add")
-          )
-        ],
-      ),
+      body:Center(
+        child: FutureBuilder(
+          future: _getData(),
+          builder: (context,snapshot){
+            if(snapshot.connectionState == ConnectionState.done){
+              return Text("${snapshot.data}");
+            }else{
+              return CircularProgressIndicator();
+            }
+          }
+        )
+      )
     );
   }
 }
-
-
-
-
-
