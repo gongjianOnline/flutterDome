@@ -22,6 +22,24 @@ class _MyAppState extends State<MyApp> {
                 Navigator.pushNamed(context, "/page1");
               }, 
               child: const Text("文本表单")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, "/page2");
+              }, 
+              child: const Text("单选按钮")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, "/page3");
+              }, 
+              child: const Text("多选按钮")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, "/page4");
+              }, 
+              child: const Text("开关组件")
             )
           ],
         ),
