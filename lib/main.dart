@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 
 void main(){
   runApp(MaterialApp(
@@ -15,35 +14,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<List> _getList() async{
-    var response = await Dio().get("https://jdmall.itying.com/api/pcate");
-    return response.data['result'];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("使用FutureBuild方式请求数据")
+        title: const Text("下拉刷新"),
       ),
-      body: FutureBuilder(
-            future:_getList(),
-            builder:(context, snapshot){
-              if(snapshot.connectionState == ConnectionState.done){
-                var list = snapshot.data as List;
-                return Column(
-                  children: list.map((item){
-                    return ListTile(title:Text("${item['title']}"));
-                  }).toList()
-                );
-              }else{
-                return const CircularProgressIndicator();
-              }
-              
-            }
-          ),
+      body:RefreshIndicator(
+        child: ListView(
+          children: [],
+        ), 
+        onRefresh:()async{
+          print("底部更新");
+        }
+      )
     );
   }
 }
+
 
 
