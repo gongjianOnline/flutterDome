@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 void main(){
   runApp(MaterialApp(
-    home: MyApp(),
+    home:MyApp()
   ));
 }
 
@@ -15,33 +15,35 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List resData = [];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Dio().get("https://jdmall.itying.com/api/pcate").then((response){
-      setState(() {
-        resData = response.data["result"];
-      });
-    });
-    
+  Future<List> _getList() async{
+    var response = await Dio().get("https://jdmall.itying.com/api/pcate");
+    return response.data['result'];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("请求接口")
+        title:const Text("使用FutureBuild方式请求数据")
       ),
-      body:Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:resData.map((item){
-            return ListTile(title:Text("${item['title']}"));
-          }).toList()
-        ),
-      )
+      body: FutureBuilder(
+            future:_getList(),
+            builder:(context, snapshot){
+              if(snapshot.connectionState == ConnectionState.done){
+                var list = snapshot.data as List;
+                return Column(
+                  children: list.map((item){
+                    return ListTile(title:Text("${item['title']}"));
+                  }).toList()
+                );
+              }else{
+                return const CircularProgressIndicator();
+              }
+              
+            }
+          ),
     );
   }
 }
+
 
