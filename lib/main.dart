@@ -15,23 +15,36 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ScrollController _xxx = ScrollController();
   List listData = [];
   int index = 1;
+  bool flag = true;
   @override
   void initState() {
     super.initState();
+    _xxx.addListener((){
+      _scrollFun();
+    });
      _getData();
-    // print("1111111");
-    // print(res);
+  }
+
+  _scrollFun(){
+    if(_xxx.position.pixels > _xxx.position.maxScrollExtent-30){
+      _getData();
+    }
   }
 
   _getData()async{
-    var response = await Dio().get("https://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=$index");
-    var result=json.decode(response.data);
-    setState(() {
-      listData = result['result'];
-      index++;
-    });
+    if(flag){
+      flag = false;
+      var response = await Dio().get("https://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=$index");
+      var result=json.decode(response.data);
+      setState(() {
+        listData.addAll(result['result']);
+        index++;
+        flag = true;
+      });
+    }
   }
 
 
@@ -41,17 +54,12 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: const Text("下拉刷新"),
       ),
-      body:RefreshIndicator(
-        child: ListView(
-          children: listData.map((item){
-            return ListTile(title:Text("${item['title']}"));
-          }).toList(),
-        ), 
-        onRefresh:()async{
-          print("底部更新");
-          _getData();
-        }
-      )
+      body:ListView(
+        controller: _xxx,
+        children: listData.map((item){
+          return ListTile(title:Text("${item['title']}"));
+        }).toList(),
+      ), 
     );
   }
 }
