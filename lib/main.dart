@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import "dart:convert";
 void main(){
-  runApp(const MaterialApp(
-    home:MyApp(),
-    localizationsDelegates: [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-    ],
-    supportedLocales:[
-      //此处
-      Locale('zh', 'CH'),
-      Locale('en', 'US'),
-    ],
-
+  runApp(MaterialApp(
+    home:MyApp()
   ));
 }
 
@@ -24,52 +14,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TimeOfDay time = TimeOfDay.now();
-  DateTime dateTime = DateTime.now();
+  Map map = {"name":"张三","age":18};
+  
   @override
   Widget build(BuildContext context) {
-    print(dateTime);
+    var  xxx = json.encode(map);
+    var aaa = json.decode(xxx);
+    print(aaa);
+
     return Scaffold(
       appBar: AppBar(
-        title:const Text("时间格式")
+        title: const Text("Map to Json"),
       ),
-      body:Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              child: Text("${time.hour}:${time.minute}"),
-              onTap: ()async{
-                TimeOfDay? newTime = await showTimePicker(
-                  context: context, 
-                  initialTime: time
-                );
-                setState(() {
-                  time = newTime!;
-                });
-              },
-            ),
-            SizedBox(height: 30),
-            InkWell(
-              child: Text("${dateTime.year}-${dateTime.month}-${dateTime.day}"),
-              onTap: ()async{
-                DateTime? newDateTime = await showDatePicker(
-                  context: context, 
-                  initialDate: dateTime, 
-                  firstDate: DateTime(1990,1,1), 
-                  lastDate: DateTime(2050,1,1)
-                );
-                setState(() {
-                  dateTime = newDateTime!;
-                });
-              },
-            )
-          ],
-        ),
-      )
+      body:Text("text")
     );
   }
 }
-
-
 
