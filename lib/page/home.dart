@@ -1,51 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import "dart:convert";
-
-
-class Home extends StatefulWidget {
-  const Home({super.key});
+import 'package:device_info_plus/device_info_plus.dart';
+class DevicePage extends StatefulWidget {
+  const DevicePage({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<DevicePage> createState() => _DevicePageState();
 }
 
-class _HomeState extends State<Home> {
-  List listData = [];
+class _DevicePageState extends State<DevicePage> {
+  List<Widget> _list=[];
   @override
   void initState() {
     super.initState();
-    _getData();
+    _getDeviceInfo();
   }
 
-  _getData()async{
-    var response = await Dio().get("https://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1");
-    var res = response.data;
+  _getDeviceInfo() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    final deviceInfo = await deviceInfoPlugin.deviceInfo;
+    final deviceInfoMap = deviceInfo.data;
+    print(deviceInfoMap);
+    print(deviceInfoMap.entries);
+
+    var tempList=deviceInfoMap.entries.map((e){
+        return ListTile(
+          title: Text("${e.key}:${e.value}"),
+        );
+    }).toList();
+
     setState(() {
-      listData = json.decode(res)["result"];
+      _list=tempList;
     });
-    print(json.decode(res)["result"]);
+
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("新闻列表")
+        title: const Text('Device演示'),
       ),
       body: ListView(
-        children:listData.map((item){
-          return ListTile(
-            title:Text("${item['title']}"),
-            onTap: (){
-              Navigator.pushNamed(
-                context, 
-                "/news"
-              );
-            },
-          );
-        }).toList(),
+        children:_list,
       ),
     );
   }
 }
-
