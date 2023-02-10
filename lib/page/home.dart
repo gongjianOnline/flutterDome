@@ -39,8 +39,7 @@ class _HomeState extends State<Home> {
             onTap: (){
               Navigator.pushNamed(
                 context, 
-                "/news",
-                arguments: {"newId":item['aid']}
+                "/news"
               );
             },
           );
