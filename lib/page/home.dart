@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -10,51 +13,75 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  XFile? _pickedFile;
+  
+
   final ImagePicker _picker = ImagePicker();
-// 调用相机
-  _getCamera()async{
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    print("--------------------");
-    print(pickedFile!.path);
-    setState((){
-      _pickedFile = pickedFile;
+  XFile? isFile;
+  late VideoPlayerController videoPlayerController;
+  late ChewieController chewieController; 
+
+  _initVideo(url){
+    videoPlayerController  = VideoPlayerController.file(url);
+    chewieController  = ChewieController(
+      videoPlayerController: videoPlayerController,
+      autoPlay: false,
+      looping: false,
+    );
+  }
+
+
+  _getPickVideo()async{
+    final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
+    print("-----");
+    print(File(video!.path));
+    _initVideo(File(video!.path));
+    setState(() {
+      isFile = video;
     });
   }
 
-  _getSource()async{
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    print("--------------------");
-    print(pickedFile!.path);
-    setState((){
-      _pickedFile = pickedFile;
+  _getPickVideox()async{
+    final XFile? video = await _picker.pickVideo(source: ImageSource.gallery);
+    print("-----");
+    print(File(video!.path));
+    _initVideo(File(video!.path));
+    setState(() {
+      isFile = video;
     });
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("拍照及相册操作"),
+        title: const Text("视频回显"),
       ),
-      body:ListView(
-        children: [
-          ElevatedButton(
-            onPressed: (){
-              _getCamera();
-            }, 
-            child: const Text("拍照")
-          ),
-          ElevatedButton(
-            onPressed: (){
-              _getSource();
-            }, 
-            child: const Text("选择相册")
-          ),
-          _pickedFile == null?Text("选择照片")
-          :Image.file(File(_pickedFile!.path))
-        ],
+      body:Center(
+        child: ListView(
+          children: [
+            ElevatedButton(
+              onPressed: (){_getPickVideo();}, 
+              child: const Text("录像")
+            ),
+            ElevatedButton(
+              onPressed: (){_getPickVideox();}, 
+              child: const Text("选择视频")
+            ),
+            isFile == null ? Text("选择视频"):Chewie(
+              controller: chewieController,
+            )
+          ],
+        ),
       )
     );
+
   }
 }
+
