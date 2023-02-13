@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart';
+import "dart:convert";
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,49 +11,47 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final dio = Dio();
-  final ImagePicker _picker = ImagePicker();
-
-
-  _getImage()async{
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    print("File(photo!.path)");
-    print(File(photo!.path));
-    _ajaxFun(photo.path);
+  _addFun()async{
+    final prefs = await SharedPreferences.getInstance();
+    // prefs.setString("name","张三");
+    // prefs.setStringList("ListStr",["1",'2']);
+    List list = ["1",2,3,4,5];
+    String  xxx = json.encode(list);
+    prefs.setString("ListData",xxx);
   }
-  _getVideo()async{
-    final XFile? photo = await _picker.pickVideo(source: ImageSource.camera);
-    print("File(photo!.path)");
-    print(File(photo!.path));
-    _ajaxFun(photo.path);
+  _getFun()async{
+    final prefs = await SharedPreferences.getInstance();
+    // String? num = prefs.getString("name");
+    // List<String>? ListStr = prefs.getStringList("ListStr");
+    String? ListData = prefs.getString("ListData");
+    // print(num);
+    // print(ListStr);
+    print(json.decode(ListData as String)[0]);
   }
-
-  _ajaxFun(String filePath)async{
-    final formData = FormData.fromMap({
-      "xxx":"zzz",
-      "file":await MultipartFile.fromFile(filePath)
-    });
-    final response = await dio.post('https://jdmall.itying.com/imgupload', data: formData);
-    print("------------");
-    print(response);
+  _removeFun()async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("ListStr");
   }
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("图片上传")
+        title:const Text("本地存储")
       ),
       body:Center(
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: (){_getImage();}, 
-              child: const Text("拍照")
+              onPressed: (){_addFun();}, 
+              child: const Text("添加数据")
             ),
             ElevatedButton(
-              onPressed: (){_getVideo();}, 
-              child: const Text("录像")
+              onPressed: (){_getFun();}, 
+              child: const Text("获取数据")
+            ),
+            ElevatedButton(
+              onPressed: (){}, 
+              child: const Text("删除数据")
             ),
 
           ],
