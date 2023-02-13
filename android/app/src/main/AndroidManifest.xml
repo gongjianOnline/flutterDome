@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_dome">
     <uses-permission android:name="android.permission.INTERNET"/>
-
     
     <!-- 配置打开外部APP -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
