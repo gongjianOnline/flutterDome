@@ -37,6 +37,7 @@ dependencies:
   url_launcher: ^6.1.9
   video_player: ^2.5.1
   chewie: ^1.4.0
+  image_picker: ^0.8.6+1
   flutter:
     sdk: flutter
   flutter_localizations:

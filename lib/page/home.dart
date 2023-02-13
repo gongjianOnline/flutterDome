@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -10,63 +10,51 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late VideoPlayerController videoPlayerController = VideoPlayerController.network(
-    'https://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4');
-  
-  late ChewieController chewieController = ChewieController(
-    aspectRatio:3/2,
-    videoPlayerController: videoPlayerController,
-    autoPlay: true,
-    looping: true,
-    optionsBuilder: (context, defaultOptions)async{
-      await showModalBottomSheet(
-        context: context, 
-        builder: (context){
-          return ListView(
-            children: [
-              ListTile(
-                title:const Text("播放速度"),
-                onTap: (){
-                  print("-----------");
-                  print(defaultOptions);
-                  defaultOptions[0].onTap!();
-                },
-              ),
-              ListTile(
-                title:const Text("取消"),
-                onTap: (){
-
-                },
-              )
-            ],
-          );
-        }
-      );
-    }
-  );
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
-    super.dispose();
+  XFile? _pickedFile;
+  final ImagePicker _picker = ImagePicker();
+// 调用相机
+  _getCamera()async{
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    print("--------------------");
+    print(pickedFile!.path);
+    setState((){
+      _pickedFile = pickedFile;
+    });
   }
 
-  
-  
+  _getSource()async{
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    print("--------------------");
+    print(pickedFile!.path);
+    setState((){
+      _pickedFile = pickedFile;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("视频播放组件")
+        title:const Text("拍照及相册操作"),
       ),
-      body: AspectRatio(
-        aspectRatio:3/2,
-        child:Chewie(
-          controller: chewieController,
-        )
-      ),
+      body:ListView(
+        children: [
+          ElevatedButton(
+            onPressed: (){
+              _getCamera();
+            }, 
+            child: const Text("拍照")
+          ),
+          ElevatedButton(
+            onPressed: (){
+              _getSource();
+            }, 
+            child: const Text("选择相册")
+          ),
+          _pickedFile == null?Text("选择照片")
+          :Image.file(File(_pickedFile!.path))
+        ],
+      )
     );
   }
 }
-
