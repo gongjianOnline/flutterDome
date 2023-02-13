@@ -1,48 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-class DevicePage extends StatefulWidget {
-  const DevicePage({super.key});
+import 'package:url_launcher/url_launcher.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<DevicePage> createState() => _DevicePageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _DevicePageState extends State<DevicePage> {
-  List<Widget> _list=[];
-  @override
-  void initState() {
-    super.initState();
-    _getDeviceInfo();
-  }
-
-  _getDeviceInfo() async {
-    final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    final deviceInfoMap = deviceInfo.data;
-    print(deviceInfoMap);
-    print(deviceInfoMap.entries);
-
-    var tempList=deviceInfoMap.entries.map((e){
-        return ListTile(
-          title: Text("${e.key}:${e.value}"),
-        );
-    }).toList();
-
-    setState(() {
-      _list=tempList;
-    });
-
-  }
-
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Device演示'),
+      appBar:AppBar(
+        title:const Text("打开内部APP")
       ),
-      body: ListView(
-        children:_list,
-      ),
+      body:ElevatedButton(
+        onPressed: () async {
+          final Uri weixin = Uri.parse('weixin://');
+          if(await canLaunchUrl(weixin)){
+            await launchUrl(weixin);
+          }
+        },
+        child:const Text("开微信"),
+      )
     );
   }
 }

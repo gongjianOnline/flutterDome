@@ -6,7 +6,7 @@ import "../page/news.dart";
 
 //1、配置路由
 Map routes = {
-  "/": (context) => const DevicePage(),
+  "/": (context) => const Home(),
   "/news": (context) => const News(),
 };
 
