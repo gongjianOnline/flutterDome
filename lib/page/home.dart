@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:chewie/chewie.dart';
-import 'package:video_player/video_player.dart';
+import 'package:dio/dio.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,75 +12,55 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
-
+  final dio = Dio();
   final ImagePicker _picker = ImagePicker();
-  XFile? isFile;
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController; 
 
-  _initVideo(url){
-    videoPlayerController  = VideoPlayerController.file(url);
-    chewieController  = ChewieController(
-      videoPlayerController: videoPlayerController,
-      autoPlay: false,
-      looping: false,
-    );
+
+  _getImage()async{
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    print("File(photo!.path)");
+    print(File(photo!.path));
+    _ajaxFun(photo.path);
+  }
+  _getVideo()async{
+    final XFile? photo = await _picker.pickVideo(source: ImageSource.camera);
+    print("File(photo!.path)");
+    print(File(photo!.path));
+    _ajaxFun(photo.path);
   }
 
-
-  _getPickVideo()async{
-    final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
-    print("-----");
-    print(File(video!.path));
-    _initVideo(File(video!.path));
-    setState(() {
-      isFile = video;
+  _ajaxFun(String filePath)async{
+    final formData = FormData.fromMap({
+      "xxx":"zzz",
+      "file":await MultipartFile.fromFile(filePath)
     });
+    final response = await dio.post('https://jdmall.itying.com/imgupload', data: formData);
+    print("------------");
+    print(response);
   }
-
-  _getPickVideox()async{
-    final XFile? video = await _picker.pickVideo(source: ImageSource.gallery);
-    print("-----");
-    print(File(video!.path));
-    _initVideo(File(video!.path));
-    setState(() {
-      isFile = video;
-    });
-  }
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
-    super.dispose();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("视频回显"),
+        title:const Text("图片上传")
       ),
       body:Center(
-        child: ListView(
+        child: Column(
           children: [
             ElevatedButton(
-              onPressed: (){_getPickVideo();}, 
-              child: const Text("录像")
+              onPressed: (){_getImage();}, 
+              child: const Text("拍照")
             ),
             ElevatedButton(
-              onPressed: (){_getPickVideox();}, 
-              child: const Text("选择视频")
+              onPressed: (){_getVideo();}, 
+              child: const Text("录像")
             ),
-            isFile == null ? Text("选择视频"):Chewie(
-              controller: chewieController,
-            )
+
           ],
         ),
       )
     );
-
   }
 }
 
