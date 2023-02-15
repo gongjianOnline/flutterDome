@@ -46,7 +46,49 @@ class _MyAppState extends State<MyApp> {
                 );
               }, 
               child: const Text("alter提示")
+            ),
+
+            ElevatedButton(
+              onPressed: (){
+                Get.bottomSheet(
+                  Container(
+                    color:Get.isDarkMode?Colors.black:Colors.white,
+                    height: 200,
+                    child: Column(
+                      children: [
+                        Container(
+                          color:Get.isDarkMode?Colors.black:Colors.white,
+                          child:ListTile(
+                            textColor:Get.isDarkMode?Colors.white:Colors.black,
+                            title:Text("白天模式"),
+                            onTap: (){
+                              Get.changeTheme(ThemeData.light());
+                              Get.back();
+                            }
+                          ),
+                        ),
+                        Container(
+                          color:Get.isDarkMode?Colors.black:Colors.white,
+                          child:ListTile(
+                            textColor:Get.isDarkMode?Colors.white:Colors.black,
+                            title:Text("黑夜模式"),
+                            onTap: (){
+                              Get.changeTheme(ThemeData.dark());
+                              Get.back();
+                            }
+                          )
+                        )
+                        
+                        
+                      ],
+                    ),
+                  )
+                );
+
+              }, 
+              child:const Text("下拉抽屉")
             )
+
           ],
         ),
       )
