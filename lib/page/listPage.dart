@@ -13,7 +13,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   //获取List实例
-  ListController listController=Get.find<ListController>();
+  ListController listController=Get.find();
 
   @override
   void initState() {

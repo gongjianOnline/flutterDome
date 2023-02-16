@@ -11,8 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  StoreCount  myCount = Get.put(StoreCount());
-  ListController  myList = Get.put(ListController());
+  StoreCount  myCount = Get.find();
+  ListController  myList = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
