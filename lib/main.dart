@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "./builder/gexComtroller.dart";
+import 'buildering/gexComtroller.dart';
 import "package:get/get.dart";
 import "./router/router.dart";
 

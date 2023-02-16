@@ -7,7 +7,6 @@ class Page3 extends GetView<StorePage3>{
   
   @override
   Widget build(BuildContext context) {
-    Get.put(StorePage3());
     return Scaffold(
       appBar: AppBar(
         title:const Text("GexView")
@@ -16,7 +15,13 @@ class Page3 extends GetView<StorePage3>{
         child: Column(
           children: [
             Text("data"),
-            Obx(()=>Text("${controller.counter}"))
+            Obx(()=>Text("${controller.counter}")),
+            ElevatedButton(
+              onPressed: (){
+                controller.add();
+              }, 
+              child: Text("add")
+            )
           ],
         ),
       )

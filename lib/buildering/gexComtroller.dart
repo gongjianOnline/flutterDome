@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+
 import "package:get/get.dart";
 
-import "../store/count.dart";
-import "../store/list.dart";
+import '../store/count.dart';
+import '../store/list.dart';
 
 class AllControllerBinding implements Bindings{
   @override
