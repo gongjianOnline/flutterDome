@@ -52,6 +52,12 @@ class _HomeState extends State<Home> {
                 Get.toNamed("/page3");
               }, 
               child: const Text("跳转Page3页面")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Get.toNamed("/page4");
+              }, 
+              child: const Text("跳转Page4页面")
             )
           ],
         )

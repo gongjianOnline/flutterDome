@@ -6,7 +6,9 @@ import "../page/home.dart";
 import "../page/page2.dart";
 import "../page/listPage.dart"; 
 import "../page/page3.dart"; 
+import "../page/page4.dart"; 
 import "../buildering/page3Controller.dart";
+import "../buildering/page4Binding.dart";
 
 class MyPage{
   static final routes = [
@@ -17,6 +19,11 @@ class MyPage{
       name: "/page3", 
       binding: Page3ControllerBuilding(),
       page: ()=>const Page3()
+    ),
+    GetPage(
+      name: "/page4", 
+      binding: Page4Building(),
+      page: ()=> Page4()
     ),
   ];
 }
