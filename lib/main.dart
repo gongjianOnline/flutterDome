@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'buildering/gexComtroller.dart';
 import "package:get/get.dart";
-import "./router/router.dart";
-
+import "./routes/routes.dart";
+import "./GexBinding/allGexbinding.dart";
 void main(){
   runApp(GetMaterialApp(
     initialBinding: AllControllerBinding(),
-    initialRoute: "/",
-    getPages:MyPage.routes
+    initialRoute: '/',
+    defaultTransition: Transition.rightToLeft,
+    getPages: AppPage.routers,
   ));
 }
-
-
-
-
 
 
