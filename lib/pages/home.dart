@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
       body: Center(
         child: Column(
           children: [
+            Text("hello".tr),
             Obx(()=>Text("${xxx.count}")),
             ElevatedButton(
               onPressed: (){
