@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:bruno/bruno.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -10,6 +11,9 @@ class HomeController extends GetxController {
     "111111",
     "11111"
   ].obs;
+
+  BrnSearchTextController searchController = BrnSearchTextController();
+  TextEditingController textController = TextEditingController();
 
   @override
   void onInit() {
