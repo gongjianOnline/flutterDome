@@ -4,13 +4,23 @@ import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 void main() {
   runApp(
-    GetMaterialApp(
-      title: "Application",
-      defaultTransition: Transition.rightToLeft,
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-    ),
+    ScreenUtilInit(
+      designSize: const Size(1080,2400),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder:(context , child){
+        return GetMaterialApp(
+          title: "Application",
+          defaultTransition: Transition.rightToLeft,
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+        );
+      }
+    )
   );
 }
+
